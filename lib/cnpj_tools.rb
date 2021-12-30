@@ -8,28 +8,28 @@ module CnpjTools
     def valid?(cnpj)
       tax_id = cnpj_to_s(cnpj)
 
-      if invalid_repetition?(tax_id)
-        false
-      elsif tax_id.length == 11
+      if tax_id.length == 14
+        return false if invalid_repetition?(tax_id)
+
         id_array = tax_id.split('').map(&:to_i)
 
-        first_digit  = id_multiplier(id_array[0..8])
-        second_digit = id_multiplier(id_array[0..9])
+        first_digit  = id_multiplier(id_array[0..11])
+        second_digit = id_multiplier(id_array[0..12])
 
-        first_digit == id_array[9] && second_digit == id_array[10]
+        first_digit == id_array[12] && second_digit == id_array[13]
       else
-        false
+        return false
       end
     end
 
     def format(cnpj, format: :masked)
       tax_id = cnpj_to_s(cnpj)
-      return '' unless tax_id.length == 11
+      return '' unless valid?(tax_id)
 
       if format == :digits_only
         tax_id
       else
-        "#{tax_id[0..2]}.#{tax_id[3..5]}.#{tax_id[6..8]}-#{tax_id[9..10]}"
+        "#{tax_id[0..1]}.#{tax_id[2..4]}.#{tax_id[5..7]}/#{tax_id[8..11]}-#{tax_id[12..13]}"
       end
     end
 
@@ -44,14 +44,15 @@ module CnpjTools
     end
 
     def invalid_repetition?(tax_id)
-      tax_id.count('0') == 11 || tax_id.count('9') == 11
+      return true if tax_id[0..7].split('').uniq.count == 1
     end
 
     def id_multiplier(id)
-      multiplier = id.length + 1
-      tax_id_base = id.enum_for(:each_with_index).map { |x, idx| x * (multiplier - idx) }.inject(:+)
-      result = (tax_id_base * 10) % 11
-      result == 10 ? 0 : result
+      multiplier = id.length == 12 ? [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3 ,2] : [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+
+      tax_id_base = id.enum_for(:each_with_index).map { |x, idx| x * multiplier[idx] }.inject(:+)
+
+      (tax_id_base * 10) % 11
     end
   end
 end
