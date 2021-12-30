@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative "cnpj_tools/version"
+require_relative 'cnpj_tools/version'
 
 module CnpjTools
   class Error < StandardError; end
