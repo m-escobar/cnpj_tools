@@ -27,28 +27,28 @@ Any non-digit character will be ignored and only numbers will be tested.
 
 Tax ID number will be validate for length, invalid number repetitions, first and second verification digits.
 
-    CnpjTools.valid?('199.060.640-72') => true
-    CnpjTools.valid?('19906064072') => true
-    CnpjTools.valid?('199-060-640#72') => true
-    CnpjTools.valid?(19906064072) => true
+    CnpjTools.valid?('16.533.758/0001-25') => true
+    CnpjTools.valid?('16533758000125') => true
+    CnpjTools.valid?('16.533.758-0001-25') => true
+    CnpjTools.valid?(16533758000125) => true
 
-    CnpjTools.valid?('123.060.640-72') => false
+    CnpjTools.valid?('12.333.758/0001-25') => false
 
 
 ### CnpjTools.format (string)
 Format the CNPJ accordingly with the parameters, no validation will be done.
 
-If the string length is different from 11 (CNPJ standard length) an empty string will be returned.
+If the string length is different from 14 (CNPJ standard length) an empty string will be returned.
 
 ### with_mask
-A string with default mask applied will be returned -> '###.###.###-##'
+A string with default mask applied will be returned -> '##.###.###/####-##'
 
-    CnpjTools.format('19906064072') => '199.060.640-72'
+    CnpjTools.format('16533758000126') => '16.533.758/0001-26'
 
 ### digits_only
 A string with digits only will be returned.
 
-    CnpjTools.format('199.060.640-72', format: :digits_only) => '19906064072'
+    CnpjTools.format('16.533.758/0001-25', format: :digits_only) => '16533758000125'
 
 
 ### CnpjTools.return_valid (string)
@@ -57,14 +57,14 @@ This method combines valid? and format and will return a formatted string if CNP
 If the string length is different from 11 (CNPJ standard length) or CNPJ isn't valid an empty string will be returned.
 
 ### with_mask
-A string with default mask applied will be returned -> '###.###.###-##'
+A string with default mask applied will be returned -> '##.###.###/####-##'
 
-    CnpjTools.return_valid('19906064072') => '199.060.640-72'
+    CnpjTools.return_valid('16533758000125') => '16.533.758/0001-25'
 
 ### digits_only
 A string with digits only will be returned.
 
-    CnpjTools.return_valid('199.060.640-72', format: :digits_only) => '19906064072'
+    CnpjTools.return_valid('16.533.758/0001-25', format: :digits_only) => '16533758000125'
 
 
 ## Development

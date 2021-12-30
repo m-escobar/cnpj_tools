@@ -24,7 +24,7 @@ module CnpjTools
 
     def format(cnpj, format: :masked)
       tax_id = cnpj_to_s(cnpj)
-      return '' unless valid?(tax_id)
+      return '' unless tax_id.length == 14
 
       if format == :digits_only
         tax_id
