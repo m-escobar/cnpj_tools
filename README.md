@@ -54,7 +54,7 @@ A string with digits only will be returned.
 ### CnpjTools.return_valid (string)
 This method combines valid? and format and will return a formatted string if CNPJ is valid.
 
-If the string length is different from 11 (CNPJ standard length) or CNPJ isn't valid an empty string will be returned.
+If the string length is different from 14 (CNPJ standard length) or CNPJ isn't valid an empty string will be returned.
 
 ### with_mask
 A string with default mask applied will be returned -> '##.###.###/####-##'
